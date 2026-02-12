@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Hey there, pretty girl</title>
+
+    <style>
+      h1 { text-align: center; color: #ffffff; font-family: "Comic Sans MS", cursive, sans-serif; }
+      body { background-color: #ffb6c1; }
+
+      .rizz-pic { display: block; margin-left: auto; margin-right: auto; width: 25%; height: auto; }
+
+      .pickup-line { text-align: center; color: #ffffff; font-family: "Comic Sans MS", cursive, sans-serif; font-size: 20px; }
+      .bigred { color: red; font-size: 35px; }
+
+      .button-container {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #ff69b4;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover { background-color: #ff1493; }
+    .heart {
+        position: fixed;
+        left: 50vw;
+        bottom: -30px;          /* start below screen */
+        font-size: 24px;
+        pointer-events: none;
+        z-index: 9999;
+        opacity: 1;
+        animation-name: floatUp;
+        animation-timing-function: linear;
+        animation-fill-mode: forwards;
+    }
+
+@keyframes floatUp {
+  from { bottom: -30px; opacity: 1; }
+  to   { bottom: 110vh; opacity: 0; }
+}
+    </style>
+  </head>
+
+  <body>
+    <h1><i>Hey there, pretty girl</i></h1>
+
+    <audio id="background-music" autoplay>
+      <source src="Best I Ever Had.mp3" />
+    </audio>
+
+    <img
+      id="rizz-face"
+      src="IMG_9150.jpg"
+      alt="rizz pic"
+      class="rizz-pic"
+    />
+
+    <!-- ✅ Give this p an id so JS can change it -->
+    <p id="question" class="pickup-line">
+      Roses are red, violets are blue, but you're one of none. Will you be my
+      <span class="bigred">Valentine?</span>
+    </p>
+
+    <div class="button-container">
+      <button id= "yesBtn" type="button" onclick="yesClick()">Yes</button>
+      <button type="button" onclick="noClick()">No</button>
+    </div>
+
+    <script>
+      // volume
+      const audio = document.getElementById("background-music");
+      audio.volume = 0.1;
+
+      // no button text changes
+      let noCount = 0;
+      let yesScale = 1; // initial scale for yes button
+
+      function noClick() {
+        noCount++;
+
+        if (noCount === 1) {
+          document.getElementById("question").innerText = "Are you sure??";
+        } else if (noCount === 2) {
+          document.getElementById("question").innerText = "Really sure??";
+        } else if (noCount === 3) {
+          document.getElementById("question").innerText = "You can say yes, you know.";
+        } else if (noCount === 4) {
+          document.getElementById("question").innerText = "It's not funny anymore, say yes.";
+      } else if (noCount === 5) {
+          document.getElementById("question").innerText = "Come on meri jaaannn say yes.";
+        } else if (noCount === 6) {
+          document.getElementById("question").innerText = "Last chance.";
+        } else {
+          document.getElementById("question").innerText = "JUST PRESS YES ALREADY";
+        }
+
+        const yesBtn = document.getElementById("yesBtn");
+
+        let currentPadding = parseInt(getComputedStyle(yesBtn).paddingLeft);
+        let currentFontSize = parseInt(getComputedStyle(yesBtn).fontSize);
+
+        yesBtn.style.paddingLeft = (currentPadding + 5) + "px";
+        yesBtn.style.paddingRight = (currentPadding + 10) + "px";
+        yesBtn.style.fontSize = (currentFontSize + 2) + "px";
+
+    }
+
+        function yesClick() {
+            document.getElementById("question").innerText = "Good! I knew you couldn't resist my charm. I'll be spending my Valentine's Day with you, and I can't wait! I love you!";
+
+            document.getElementById("rizz-face").src = "IMG_9019.JPG";
+
+            document.querySelector(".button-container button:last-child").style.display = "none";
+
+            spawnHearts(40);
+        }
+
+        function spawnHearts(count = 25) {
+  for (let i = 0; i < count; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.textContent = "❤️";
+
+    // random horizontal position
+    heart.style.left = Math.random() * 100 + "vw";
+
+    // random size
+    const size = 16 + Math.random() * 24;
+    heart.style.fontSize = size + "px";
+
+    // random duration + delay
+    const duration = 2 + Math.random() * 2;
+    const delay = Math.random() * 0.4;
+
+    heart.style.animationDuration = duration + "s";
+    heart.style.animationDelay = delay + "s";
+
+    document.body.appendChild(heart);
+
+    // remove after it's done
+    setTimeout(() => heart.remove(), (duration + delay) * 1000 + 200);
+  }
+}
+    </script>
+  </body>
+</html>
